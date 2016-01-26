@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BooksOrganizer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,30 @@ namespace BooksOrganizer
     /// </summary>
     public partial class WorkspaceWindow : Window
     {
+        private readonly WorkspaceViewModel vm;
+
         public WorkspaceWindow()
         {
+            vm = new WorkspaceViewModel(this);
+
+            this.DataContext = vm;
+
             InitializeComponent();
+
+            var db = Workspace.Current.DB;
+            /*
+            db.Books.Add(new Models.Book() {
+                Created = DateTime.Now, //Move to constructor
+                Title = "Test"
+            });
+
+            db.SaveChanges();
+            */
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

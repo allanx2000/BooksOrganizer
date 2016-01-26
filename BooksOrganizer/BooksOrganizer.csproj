@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\LoaderViewModel.cs" />
+    <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="WorkspaceWindow.xaml.cs">
       <DependentUpon>WorkspaceWindow.xaml</DependentUpon>

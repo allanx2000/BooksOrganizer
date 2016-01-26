@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BooksOrganizer"
         mc:Ignorable="d"
-        Title="WorkspaceWindow" Height="300" Width="300">
-    <Grid>
-        <Label>TEST</Label>
-    </Grid>
+        Title="WorkspaceWindow" Height="699" Width="500">
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Load"/>
+            </MenuItem>
+            <MenuItem Header="Options"/>
+            <MenuItem Header="Exporter"/>
+        </Menu>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="Stats" Grid.Row="0">
+
+            </GroupBox>
+            <GroupBox Header="View" Grid.Row="1">
+                <GroupBox.Resources>
+                    <Style TargetType="RadioButton">
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                    <Style TargetType="CheckBox">
+                        <Setter Property="Margin" Value="5" />
+                    </Style>
+                </GroupBox.Resources>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Group By:</Label>
+                        <RadioButton IsChecked="{Binding ByTitle}">Title</RadioButton>
+                        <RadioButton IsChecked="{Binding ByTopic}">Topic</RadioButton>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label>Order Notes By:</Label>
+                        <RadioButton>Location</RadioButton>
+                        <RadioButton>Created</RadioButton>
+                        <RadioButton>Updated</RadioButton>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox>Exclude Published</CheckBox>
+                        <CheckBox>Show Notes</CheckBox>
+                    </StackPanel>
+
+                    <Button HorizontalAlignment="Center" Width="70">Refresh</Button>
+                </StackPanel>
+            </GroupBox>
+
+            <TreeView ItemsSource="{Binding List}" />
+
+
+        </Grid>
+    </DockPanel>
 </Window>
