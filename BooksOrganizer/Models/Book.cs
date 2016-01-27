@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BooksOrganizer.Models
 {
-    public class Book
+    public class Book : INodeData
     {
         #region "Keys"
         //This relationship needs to be enforce manually... not sure how to set

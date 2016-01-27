@@ -2,7 +2,7 @@
 
 namespace BooksOrganizer.Models
 {
-    public class Topic
+    public class Topic : INodeData
     {
         [Key]
         public int ID { get; set; }

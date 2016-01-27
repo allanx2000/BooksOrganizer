@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BooksOrganizer.Models
 {
-    public class Note
+    public class Note : INodeData
     {
         [Key]
         public int ID { get; set; }

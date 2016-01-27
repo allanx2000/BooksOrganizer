@@ -30,8 +30,10 @@ namespace BooksOrganizer
 
             InitializeComponent();
 
-            var db = Workspace.Current.DB;
+            //TODO: Need to do a query when load db, in loader
             /*
+            var db = Workspace.Current.DB;
+
             db.Books.Add(new Models.Book() {
                 Created = DateTime.Now, //Move to constructor
                 Title = "Test"
@@ -40,10 +42,10 @@ namespace BooksOrganizer
             db.SaveChanges();
             */
         }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-
+            vm.SelectedNode = e.NewValue;
         }
     }
 }

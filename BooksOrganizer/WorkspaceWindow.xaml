@@ -42,20 +42,36 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>Order Notes By:</Label>
-                        <RadioButton>Location</RadioButton>
-                        <RadioButton>Created</RadioButton>
-                        <RadioButton>Updated</RadioButton>
+                        <RadioButton IsChecked="{Binding ByLocation}">Location</RadioButton>
+                        <RadioButton IsChecked="{Binding ByCreated}">Created</RadioButton>
+                        <RadioButton IsChecked="{Binding ByUpdated}">Updated</RadioButton>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox>Exclude Published</CheckBox>
-                        <CheckBox>Show Notes</CheckBox>
+                        <CheckBox IsChecked="{Binding ExcludePublish}">Exclude Published</CheckBox>
+                        <CheckBox IsChecked="{Binding ShowNotes}">Show Notes</CheckBox>
                     </StackPanel>
 
-                    <Button HorizontalAlignment="Center" Width="70">Refresh</Button>
+                    <Button HorizontalAlignment="Center" Width="70" Command="{Binding RefreshCommand}">Refresh</Button>
                 </StackPanel>
             </GroupBox>
 
-            <TreeView ItemsSource="{Binding List}" />
+            <!-- DisplayMemberPath="Text"-->
+            <TreeView Grid.Row="2"  ItemsSource="{Binding Tree}" SelectedItemChanged="TreeView_SelectedItemChanged">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate x:Name="DataTemplate" ItemsSource="{Binding Nodes}">
+                        <TextBlock Text="{Binding Text}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+
+                <TreeView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Add Book" />
+                        <MenuItem Header="Add Note" />
+                        <Separator/>
+                        <MenuItem Header="Delete"/> 
+                    </ContextMenu>
+                </TreeView.ContextMenu>
+            </TreeView>
 
 
         </Grid>
