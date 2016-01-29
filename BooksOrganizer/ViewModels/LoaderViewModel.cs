@@ -7,15 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Settings = BooksOrganizer.Properties.Settings;
 
 namespace BooksOrganizer.ViewModels
 {
-    public class LoaderViewModel : ViewModel
+    public class LoaderViewModel : ViewModel45
     {
         private Loader window;
+        
         public LoaderViewModel(Loader window)
         {
             this.window = window;
+
+            if (Settings.Default.PathHistory == null)
+            {
+                List<string> items = new List<string>();
+
+                Settings.Default.PathHistory = new System.Collections.Specialized.StringCollection();
+                Settings.Default.Save();
+
+                PathHistory = items;
+            }
+            else
+                PathHistory = Settings.Default.PathHistory.Cast<string>().ToList();
         }
 
         public List<string> PathHistory
@@ -34,7 +48,7 @@ namespace BooksOrganizer.ViewModels
             set
             {
                 selectedPath = value;
-                RaisePropertyChanged("SelectedPath");
+                RaisePropertyChanged();
             }
         }
 
@@ -70,6 +84,12 @@ namespace BooksOrganizer.ViewModels
                 }
                 else
                     Workspace.LoadWorkspace(SelectedPath);
+
+                if (!Settings.Default.PathHistory.Contains(selectedPath))
+                {
+                    Settings.Default.PathHistory.Add(selectedPath);
+                    Settings.Default.Save();
+                }
 
                 WorkspaceWindow wiw = new WorkspaceWindow();
                 wiw.Show();

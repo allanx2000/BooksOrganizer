@@ -85,10 +85,12 @@
     <Compile Include="TopicsManager.xaml.cs">
       <DependentUpon>TopicsManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util.cs" />
     <Compile Include="ViewModels\EditBookViewModel.cs" />
     <Compile Include="ViewModels\Node.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
     <Compile Include="ViewModels\TopicsManagerViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel45.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="WorkspaceWindow.xaml.cs">

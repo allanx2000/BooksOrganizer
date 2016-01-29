@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BooksOrganizer.ViewModels
 {
-    public class TreeNode : ViewModel
+    public class TreeNode : ViewModel45
     {
         public Type GetDataType()
         {

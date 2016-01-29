@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace BooksOrganizer.ViewModels
 {
-    public class TopicsManagerViewModel : ViewModel
+    public class TopicsManagerViewModel : ViewModel45
     {
         Window window;
         public TopicsManagerViewModel(Window window)

@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace BooksOrganizer.ViewModels
 {
-    public class EditBookViewModel : ViewModel
+    public class EditBookViewModel : ViewModel45
     {
         private EditBookWindow window;
 
@@ -80,7 +80,8 @@ namespace BooksOrganizer.ViewModels
                         DefaultTopic = DefaultTopic,
                         Created = DateTime.Now,
                         Rating = GetDbRating(),
-                        Title = Title
+                        Title = Title,
+                        Comments = Comments
                     };
                     
                     Workspace.Current.DB.Books.Add(bk);
@@ -111,10 +112,21 @@ namespace BooksOrganizer.ViewModels
             set
             {
                 title = value;
-                RaisePropertyChanged2();
+                RaisePropertyChanged();
             }
         }
 
+        private string comments;
+        public string Comments
+        {
+            get { return comments; }
+            set
+            {
+                comments = value;
+                RaisePropertyChanged();
+            }
+        }
+        
         private Topic defaultTopic;
         public Topic DefaultTopic
         {
@@ -122,7 +134,7 @@ namespace BooksOrganizer.ViewModels
             set
             {
                 defaultTopic = value;
-                RaisePropertyChanged2();
+                RaisePropertyChanged();
             }
         }
 
@@ -153,11 +165,6 @@ namespace BooksOrganizer.ViewModels
             {
                 return Workspace.Current.DB.Topics.OrderBy(x => x.Name).ToList();
             }
-        }
-
-        private void RaisePropertyChanged2([CallerMemberName] string property = "")
-        {
-            RaisePropertyChanged(property);
         }
 
         private void InitializeValues()

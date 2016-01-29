@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace BooksOrganizer.ViewModels
 {
-    public class WorkspaceViewModel : ViewModel
+    public class WorkspaceViewModel : ViewModel45
     {
         #region GroupBy
 
