@@ -127,6 +127,36 @@ namespace BooksOrganizer.ViewModels
             RaisePropertyChanged("Tree");
         }
 
+        public ICommand TopicsManagerCommand
+        {
+            get
+            {
+                return new CommandHelper(ShowTopicsManager);
+            }
+        }
+
+        public void ShowTopicsManager()
+        {
+            var window = new TopicsManager();
+            window.ShowDialog();
+        }
+
+        public ICommand AddBookCommand
+        {
+            get
+            {
+                return new CommandHelper(AddBook);
+            }
+        }
+        
+
+        private void AddBook()
+        {
+            var window = new EditBookWindow();
+
+            window.ShowDialog();
+        }
+
         public ICommand RefreshCommand
         {
             get
@@ -134,16 +164,27 @@ namespace BooksOrganizer.ViewModels
                 return new CommandHelper(SetFilter);
             }
         }
-
+        
         private void SetFilter()
         {
             Tree.Clear();
 
-            foreach (Book b in Workspace.Current.DB.Books.OrderBy(x => x.Title))
+            if (SelectedGroupBy == GroupBy.Title)
             {
-                var tn = new TreeNode(TreeNode.NodeType.Node, b, b.Title);
-                tn.Add(new TreeNode(TreeNode.NodeType.Leaf, null, "TEST 2"));
-                Tree.Add(tn);
+                foreach (Book b in Workspace.Current.DB.Books.OrderBy(x => x.Title))
+                {
+                    var tn = new TreeNode(TreeNode.NodeType.Node, b, b.Title);
+                    //tn.Add(new TreeNode(TreeNode.NodeType.Leaf, null, "TEST 2"));
+                    Tree.Add(tn);
+                }
+            }
+            else if (SelectedGroupBy == GroupBy.Topic)
+            {
+                foreach (Topic t in Workspace.Current.DB.Topics.OrderBy(x => x.Name))
+                {
+                    var tn = new TreeNode(TreeNode.NodeType.Node, t, t.Name);
+                    Tree.Add(tn);
+                }
             }
 
             RaisePropertyChanged("Tree");

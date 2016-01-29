@@ -11,6 +11,20 @@ namespace BooksOrganizer.ViewModels
 {
     public class TreeNode : ViewModel
     {
+        public Type GetDataType()
+        {
+            return data.GetType();
+        }
+
+        public bool IsBook()
+        {
+            return data is Book;
+        }
+
+        public bool IsNote()
+        {
+            return data is Note;
+        }
         
         public enum NodeType
         {
@@ -19,7 +33,6 @@ namespace BooksOrganizer.ViewModels
         }
 
         private INodeData data;
-        
         private ObservableCollection<TreeNode> nodes;
 
         public ObservableCollection<TreeNode> Nodes
@@ -39,6 +52,11 @@ namespace BooksOrganizer.ViewModels
                 isExpanded = value;
                 RaisePropertyChanged("IsExpanded");
             }
+        }
+
+        public INodeData GetData()
+        {
+            return data;
         }
 
         private string text;

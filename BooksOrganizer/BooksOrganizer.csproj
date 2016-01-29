@@ -78,14 +78,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditBookWindow.xaml.cs">
+      <DependentUpon>EditBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\INodeData.cs" />
+    <Compile Include="TopicsManager.xaml.cs">
+      <DependentUpon>TopicsManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\EditBookViewModel.cs" />
     <Compile Include="ViewModels\Node.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
+    <Compile Include="ViewModels\TopicsManagerViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="WorkspaceWindow.xaml.cs">
       <DependentUpon>WorkspaceWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="EditBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Loader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,6 +110,10 @@
       <DependentUpon>Loader.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TopicsManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkspaceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

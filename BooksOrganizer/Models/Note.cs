@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BooksOrganizer.Models
 {
@@ -8,8 +9,17 @@ namespace BooksOrganizer.Models
         [Key]
         public int ID { get; set; }
 
-        public Topic Topic { get; set; }
-        public SubTopic SubTopic { get; set; }
+        [Column("Topic")]
+        public virtual int TopicId { get; set; }
+        public virtual Topic Topic { get; set; }
+
+        [Column("Book")]
+        public virtual int BookId { get; set; }
+        public virtual Book Book { get; set; }
+
+        [Column("SubTopic")]
+        public virtual int SubTopicId { get; set; }
+        public virtual SubTopic SubTopic { get; set; }
 
         [StringLength(50)]
         public string Location { get; set; }

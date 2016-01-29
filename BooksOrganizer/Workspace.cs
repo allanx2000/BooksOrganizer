@@ -33,6 +33,8 @@ namespace BooksOrganizer
         public static void LoadWorkspace(string path)
         {
             Current = new Workspace(path, true);
+
+            var i = Current.DB.Notes.FirstOrDefault();
         }
 
         /// <summary>
