@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BooksOrganizer.Models;
 
 namespace BooksOrganizer
 {
@@ -20,15 +21,25 @@ namespace BooksOrganizer
     /// </summary>
     public partial class EditBookWindow : Window
     {
-        private readonly EditBookViewModel vm;
+        private EditBookViewModel vm;
 
         public EditBookWindow()
         {
+            Load();
+        }
+
+        public EditBookWindow(Book book)
+        {
+            Load(book);
+        }
+
+        private void Load(Book book = null)
+        {
             InitializeComponent();
 
-
-            vm = new EditBookViewModel(this);
+            vm = new EditBookViewModel(this, book);
             this.DataContext = vm;
         }
+
     }
 }

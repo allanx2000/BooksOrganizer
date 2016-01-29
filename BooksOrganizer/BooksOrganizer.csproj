@@ -87,7 +87,7 @@
     </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="ViewModels\EditBookViewModel.cs" />
-    <Compile Include="ViewModels\Node.cs" />
+    <Compile Include="ViewModels\TreeNode.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
     <Compile Include="ViewModels\TopicsManagerViewModel.cs" />
     <Compile Include="ViewModels\ViewModel45.cs" />

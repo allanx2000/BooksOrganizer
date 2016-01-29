@@ -1,4 +1,5 @@
 ﻿using BooksOrganizer.Models;
+using Innouvous.Utils;
 using Innouvous.Utils.MVVM;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BooksOrganizer.ViewModels
@@ -109,10 +111,20 @@ namespace BooksOrganizer.ViewModels
         public bool ExcludePublish { get; set; }
 
         public ObservableCollection<TreeNode> Tree { get; set; }
-            
-        //TODO: Change to Node?
-        //Import from Analyst
-        public object SelectedNode { get; internal set; }
+
+        private TreeNode selectedNode;
+
+        public TreeNode SelectedNode {
+            get { return selectedNode; }
+            set
+            {
+                selectedNode = value;
+
+                //TODO: Nicer?
+                ((CommandHelper)editCommand).RaiseCanExecuteChanged();
+                RaisePropertyChanged();
+            }
+        }
 
 
 
@@ -122,9 +134,49 @@ namespace BooksOrganizer.ViewModels
         {
             this.window = window;
 
+            editCommand = new CommandHelper(Edit, (o) => selectedNode != null);
+
+
             Tree = new ObservableCollection<TreeNode>();
             //Tree.Add(new TreeNode(TreeNode.NodeType.Node, null, "Root"));
-            RaisePropertyChanged("Tree");
+            //RaisePropertyChanged("Tree");
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new CommandHelper(DeleteSelected);
+            }
+        }
+
+        private void DeleteSelected()
+        {
+            try
+            {
+                if (SelectedNode == null)
+                {
+                    MessageBoxFactory.ShowError("No item selected");
+                    return;
+                }
+
+                if (SelectedNode.IsBook)
+                    Util.DB.Books.Remove((Book)SelectedNode.GetData());
+                else if (SelectedNode.IsNote)
+                    Util.DB.Notes.Remove((Note)SelectedNode.GetData());
+                else if (SelectedNode.IsTopic)
+                    Util.DB.Topics.Remove((Topic)SelectedNode.GetData());
+                else
+                    throw new Exception("Type not supported: " + SelectedNode.GetDataType());
+
+                Util.DB.SaveChanges();
+                SetFilter();
+            }
+            catch (Exception e)
+            {
+                Util.DB.RejectChanges();
+                MessageBoxFactory.ShowError(e);
+            }
         }
 
         public ICommand TopicsManagerCommand
@@ -149,12 +201,37 @@ namespace BooksOrganizer.ViewModels
             }
         }
         
-
         private void AddBook()
         {
             var window = new EditBookWindow();
 
             window.ShowDialog();
+        }
+
+        private readonly ICommand editCommand;
+        public ICommand EditCommand
+        {
+            get
+            {
+                return editCommand;
+            }
+
+        }
+
+
+
+        private void Edit()
+        {
+            if (selectedNode == null)
+                return;
+
+            Window window;
+
+            if (selectedNode.IsBook)
+            {
+                window = new EditBookWindow((Book)selectedNode.GetData());
+                window.ShowDialog();
+            }
         }
 
         public ICommand RefreshCommand

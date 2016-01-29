@@ -16,14 +16,23 @@ namespace BooksOrganizer.ViewModels
             return data.GetType();
         }
 
-        public bool IsBook()
+
+        public bool IsTopic
         {
-            return data is Book;
+            get
+            {
+                return data is Topic;
+            }
         }
 
-        public bool IsNote()
+        public bool IsBook
         {
-            return data is Note;
+            get { return data is Book; }
+        }
+
+        public bool IsNote
+        {
+            get { return data is Note; }
         }
         
         public enum NodeType
@@ -69,6 +78,7 @@ namespace BooksOrganizer.ViewModels
                 RaisePropertyChanged("Text");
             }
         }
+
 
         public TreeNode(NodeType type, INodeData data, string text)
         {

@@ -72,6 +72,12 @@ namespace BooksOrganizer.ViewModels
             {
                 if (IsEdit)
                 {
+                    book.DefaultTopic = DefaultTopic;
+                    book.Rating = GetDbRating();
+                    book.Title = Title;
+                    book.Comments = Comments;
+
+                    Util.DB.SaveChanges();
                 }
                 else
                 {
@@ -85,8 +91,9 @@ namespace BooksOrganizer.ViewModels
                     };
                     
                     Workspace.Current.DB.Books.Add(bk);
-                    Workspace.Current.DB.SaveChanges();
                 }
+                
+                Workspace.Current.DB.SaveChanges();
 
                 window.Close();
             }
@@ -140,7 +147,7 @@ namespace BooksOrganizer.ViewModels
 
         private const string NotRead = "Not Read";
 
-        private string selectedRating;
+        private string selectedRating = NotRead;
         public string SelectedRating
         {
             get
@@ -174,6 +181,11 @@ namespace BooksOrganizer.ViewModels
 
             Title = book.Title;
             DefaultTopic = book.DefaultTopic;
+
+            if (book.Rating.HasValue)
+                SelectedRating = book.Rating.Value.ToString();
+
+            Comments = book.Comments;            
         }
     }
 }

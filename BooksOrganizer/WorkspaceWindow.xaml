@@ -58,7 +58,7 @@
             </GroupBox>
 
             <!-- DisplayMemberPath="Text"-->
-            <TreeView Grid.Row="2"  ItemsSource="{Binding Tree}" SelectedItemChanged="TreeView_SelectedItemChanged">
+            <TreeView Grid.Row="2"  ItemsSource="{Binding Tree}" SelectedItemChanged="TreeView_SelectedItemChanged" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate x:Name="DataTemplate" ItemsSource="{Binding Nodes}">
                         <TextBlock Text="{Binding Text}" />
@@ -68,9 +68,11 @@
                 <TreeView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Command="{Binding AddBookCommand}" Header="Add Book" />
-                        <MenuItem Header="Add Note" />
+                        <MenuItem Header="Add Note"/>
                         <Separator/>
-                        <MenuItem Header="Delete"/> 
+                        <MenuItem Header="Edit" Command="{Binding EditCommand}"/>
+                        <Separator/>
+                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/> 
                     </ContextMenu>
                 </TreeView.ContextMenu>
             </TreeView>
