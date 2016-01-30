@@ -19,9 +19,16 @@ namespace BooksOrganizer
     /// <summary>
     /// Interaction logic for EditBookWindow.xaml
     /// </summary>
-    public partial class EditBookWindow : Window
+    public partial class EditBookWindow : Window, ICancellable
     {
         private EditBookViewModel vm;
+        public bool Cancelled
+        {
+            get
+            {
+                return vm.Cancelled;
+            }
+        }
 
         public EditBookWindow()
         {
@@ -32,7 +39,7 @@ namespace BooksOrganizer
         {
             Load(book);
         }
-
+        
         private void Load(Book book = null)
         {
             InitializeComponent();

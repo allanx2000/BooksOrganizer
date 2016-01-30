@@ -12,11 +12,21 @@ using System.Windows.Input;
 
 namespace BooksOrganizer.ViewModels
 {
-    public class EditBookViewModel : ViewModel45
+    public class EditBookViewModel : ViewModel45, ICancellable
     {
         private EditBookWindow window;
 
         private Book book;
+
+        private bool cancelled = true;
+        public bool Cancelled
+        {
+            get
+            {
+                return cancelled;
+            }
+        }
+
 
         public EditBookViewModel(EditBookWindow window, Book bookForEdit = null)
         {
@@ -94,6 +104,7 @@ namespace BooksOrganizer.ViewModels
                 }
                 
                 Workspace.Current.DB.SaveChanges();
+                cancelled = false;
 
                 window.Close();
             }
@@ -170,9 +181,11 @@ namespace BooksOrganizer.ViewModels
         {
             get
             {
-                return Workspace.Current.DB.Topics.OrderBy(x => x.Name).ToList();
+                return Workspace.Current.GetAllTopics();
+
             }
         }
+
 
         private void InitializeValues()
         {

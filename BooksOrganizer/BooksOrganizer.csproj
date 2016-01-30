@@ -81,6 +81,7 @@
     <Compile Include="EditBookWindow.xaml.cs">
       <DependentUpon>EditBookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ICancellable.cs" />
     <Compile Include="Models\INodeData.cs" />
     <Compile Include="TopicsManager.xaml.cs">
       <DependentUpon>TopicsManager.xaml</DependentUpon>

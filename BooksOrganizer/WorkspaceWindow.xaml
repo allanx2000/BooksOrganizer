@@ -59,6 +59,11 @@
 
             <!-- DisplayMemberPath="Text"-->
             <TreeView Grid.Row="2"  ItemsSource="{Binding Tree}" SelectedItemChanged="TreeView_SelectedItemChanged" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate x:Name="DataTemplate" ItemsSource="{Binding Nodes}">
                         <TextBlock Text="{Binding Text}" />

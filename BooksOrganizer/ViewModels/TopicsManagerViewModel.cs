@@ -1,4 +1,5 @@
-﻿using Innouvous.Utils;
+﻿using BooksOrganizer.Models;
+using Innouvous.Utils;
 using Innouvous.Utils.MVVM;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,27 @@ namespace BooksOrganizer.ViewModels
             this.window = window;
         }
 
-        public string Name { get; set; }
+        public Topic SelectedTopic { get; set; }
+
+        public ICollection<Topic> Topics
+        {
+            get
+            {
+                return Workspace.Current.GetAllTopics();
+            }
+        }
+
+        #region Add New Topic
+        private string name;
+        public string Name {
+            get { return name; }
+            set
+            {
+                name = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public ICommand AddCommand
         {
             get
@@ -34,8 +55,11 @@ namespace BooksOrganizer.ViewModels
                 Workspace.Current.DB.Topics.Add(new Models.Topic() {
                     Name = this.Name
                 });
-
+                
                 Workspace.Current.DB.SaveChanges();
+
+                Name = "";
+                RaisePropertyChanged("Topics");
             }
             catch (Exception e)
             {
@@ -44,5 +68,7 @@ namespace BooksOrganizer.ViewModels
                 MessageBoxFactory.ShowError(e);
             }
         }
+
+        #endregion
     }
 }

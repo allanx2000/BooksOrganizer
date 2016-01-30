@@ -42,7 +42,7 @@
         <TextBox AcceptsReturn="True" VerticalContentAlignment="Top" 
                  Grid.Row="3" Grid.Column="1" Height="200" 
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 Text="{Binding Comments, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding Comments, UpdateSourceTrigger=PropertyChanged}" Margin="6,5,4,6" />
 
         <Button Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" 
                 Command="{Binding SaveChangeCommand}" 

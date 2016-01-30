@@ -5,20 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BooksOrganizer"
         mc:Ignorable="d"
-        Title="TopicsManager" Height="300" Width="500">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        
-        <!-- Simple -->
-        <Label Content="Name: "/>
-        <TextBox Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-        <Button Grid.Column="2"  Command="{Binding AddCommand}">Add</Button>
-    </Grid>
+        Title="Topics Manager" Height="400" Width="400">
+    <DockPanel LastChildFill="True">
+
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                <Label Content="Name: "/>
+                <TextBox Width="100" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Column="2"  Command="{Binding AddCommand}">Add</Button>
+            </StackPanel>
+
+            <Button Grid.Column="3">Close</Button>
+
+        </Grid>
+
+        <StackPanel DockPanel.Dock="Right" Margin="10">
+            <Button>Edit</Button>
+            <Button>Delete</Button>
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding Topics}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTopic}"/>
+    </DockPanel>
 </Window>

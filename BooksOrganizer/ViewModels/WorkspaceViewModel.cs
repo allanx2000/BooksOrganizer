@@ -231,9 +231,11 @@ namespace BooksOrganizer.ViewModels
             {
                 window = new EditBookWindow((Book)selectedNode.GetData());
                 window.ShowDialog();
+
+                SetFilter(window);
             }
         }
-
+        
         public ICommand RefreshCommand
         {
             get
@@ -241,7 +243,20 @@ namespace BooksOrganizer.ViewModels
                 return new CommandHelper(SetFilter);
             }
         }
-        
+
+        /// <summary>
+        /// Helper for avoiding refresh if Window is ICancellable and Cancelled
+        /// </summary>
+        /// <param name="window"></param>
+        private void SetFilter(Window window)
+        {
+            if (window is ICancellable
+                && ((ICancellable)window).Cancelled)
+                return;
+
+            SetFilter();
+        }
+
         private void SetFilter()
         {
             Tree.Clear();
@@ -260,6 +275,18 @@ namespace BooksOrganizer.ViewModels
                 foreach (Topic t in Workspace.Current.DB.Topics.OrderBy(x => x.Name))
                 {
                     var tn = new TreeNode(TreeNode.NodeType.Node, t, t.Name);
+                    tn.IsExpanded = true;
+
+                    var query = from bk in Workspace.Current.DB.Books
+                                where bk.DefaultTopicID == t.ID
+                                orderby bk.Title ascending
+                                select bk;
+                    //For testing. actually need to generate the list from all notes
+                    foreach (Book b in query)
+                    {
+                        tn.Add(new TreeNode(TreeNode.NodeType.Leaf,b, b.Title));
+                    }
+
                     Tree.Add(tn);
                 }
             }

@@ -22,13 +22,15 @@ namespace BooksOrganizer
     {
         private readonly WorkspaceViewModel vm;
 
+        
         public WorkspaceWindow()
         {
             vm = new WorkspaceViewModel(this);
-
             this.DataContext = vm;
 
             InitializeComponent();
+
+            this.Title = "Workspace: " + Workspace.Current.Path;
 
             //TODO: Need to do a query when load db, in loader
             /*
@@ -42,7 +44,7 @@ namespace BooksOrganizer
             db.SaveChanges();
             */
         }
-        
+
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             vm.SelectedNode = e.NewValue == null? null : (TreeNode) e.NewValue;
