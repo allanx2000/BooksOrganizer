@@ -28,14 +28,6 @@
 
             </GroupBox>
             <GroupBox Header="View" Grid.Row="1">
-                <GroupBox.Resources>
-                    <Style TargetType="RadioButton">
-                        <Setter Property="Margin" Value="5" />
-                    </Style>
-                    <Style TargetType="CheckBox">
-                        <Setter Property="Margin" Value="5" />
-                    </Style>
-                </GroupBox.Resources>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label>Group By:</Label>
@@ -72,10 +64,10 @@
 
                 <TreeView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Command="{Binding AddBookCommand}" Header="Add Book" />
-                        <MenuItem Header="Add Note"/>
-                        <Separator/>
                         <MenuItem Header="Edit" Command="{Binding EditCommand}"/>
+                        <Separator/>
+                        <MenuItem Header="Add Book" Command="{Binding AddBookCommand}" />
+                        <MenuItem Header="Add Note" Command="{Binding AddNoteCommand}" />
                         <Separator/>
                         <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/> 
                     </ContextMenu>

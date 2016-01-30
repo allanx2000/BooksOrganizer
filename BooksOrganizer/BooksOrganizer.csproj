@@ -78,15 +78,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EditNotesWindow.xaml.cs">
+      <DependentUpon>EditNotesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditBookWindow.xaml.cs">
       <DependentUpon>EditBookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ICancellable.cs" />
     <Compile Include="Models\INodeData.cs" />
+    <Compile Include="RequiredFieldException.cs" />
     <Compile Include="TopicsManager.xaml.cs">
       <DependentUpon>TopicsManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util.cs" />
+    <Compile Include="ViewModels\EditNoteViewModel.cs" />
     <Compile Include="ViewModels\EditBookViewModel.cs" />
     <Compile Include="ViewModels\TreeNode.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
@@ -97,6 +102,10 @@
     <Compile Include="WorkspaceWindow.xaml.cs">
       <DependentUpon>WorkspaceWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="EditNotesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

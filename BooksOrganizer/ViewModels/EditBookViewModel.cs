@@ -68,6 +68,12 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+
+        public ICommand CancelCommand
+        {
+            get { return new CommandHelper(() => window.Close()); }
+        }
+
         public ICommand SaveChangeCommand
         {
             get
@@ -182,7 +188,6 @@ namespace BooksOrganizer.ViewModels
             get
             {
                 return Workspace.Current.GetAllTopics();
-
             }
         }
 

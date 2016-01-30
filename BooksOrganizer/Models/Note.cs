@@ -10,15 +10,15 @@ namespace BooksOrganizer.Models
         public int ID { get; set; }
 
         [Column("Topic")]
-        public virtual int TopicId { get; set; }
+        public int TopicId { get; set; }
         public virtual Topic Topic { get; set; }
 
         [Column("Book")]
-        public virtual int BookId { get; set; }
+        public int BookId { get; set; }
         public virtual Book Book { get; set; }
 
         [Column("SubTopic")]
-        public virtual int SubTopicId { get; set; }
+        public int SubTopicId { get; set; }
         public virtual SubTopic SubTopic { get; set; }
 
         [StringLength(50)]
@@ -26,7 +26,7 @@ namespace BooksOrganizer.Models
         public string OriginalText { get; set; }
         public string WriteUp { get; set; }
         public string Notes { get; set; }
-        public bool? Published { get; set; }
+        public bool Published { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 

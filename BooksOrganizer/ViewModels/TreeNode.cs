@@ -79,6 +79,7 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+        public TreeNode Parent { get; private set; }
 
         public TreeNode(NodeType type, INodeData data, string text)
         {
@@ -106,7 +107,11 @@ namespace BooksOrganizer.ViewModels
             if (Type != NodeType.Node)
                 throw new IsNotNodeException();
             else
+            {
+                child.Parent = this;
+
                 nodes.Add(child);
+            }
         }
 
         public List<TreeNode> GetNodes()

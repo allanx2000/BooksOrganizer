@@ -130,6 +130,48 @@ namespace BooksOrganizer
             return Workspace.Current.DB.Topics.OrderBy(x => x.Name).ToList();
         }
 
+        public ICollection<SubTopic> GetAllSubTopics(Topic selectedTopic)
+        {
+            return (from st in Workspace.Current.DB.SubTopics
+                   where st.ParentTopicId == selectedTopic.ID
+                   orderby st.Name ascending
+                   select st).ToList();
+        }
+
+        public ICollection<Book> GetAllBooks()
+        {
+            return (from bk in Workspace.Current.DB.Books
+                    orderby bk.Title ascending
+                    select bk).ToList();
+        }
+
+        public Dictionary<int, List<Note>> GetAllNotesGrouped(bool unpublishedOnly = false)
+        {
+            Dictionary<int, List<Note>> lookup = new Dictionary<int, List<Note>>(); //Book, List
+
+            IEnumerable<Note> query;
+
+            if (unpublishedOnly)
+                query = query = (from n in Current.DB.Notes
+                                 where n.Published == false
+                                 orderby n.OriginalText ascending
+                                 select n);
+            else
+                query = query = (from n in Current.DB.Notes
+                                 orderby n.OriginalText ascending
+                                 select n);
+            
+            foreach (Note n in query)
+            {
+                if (!lookup.ContainsKey(n.BookId))
+                    lookup.Add(n.BookId, new List<Note>());
+
+                lookup[n.BookId].Add(n);
+            }
+
+            return lookup;
+        }
+
         #region Reloads
 
         /*

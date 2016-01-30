@@ -122,6 +122,8 @@ namespace BooksOrganizer.ViewModels
 
                 //TODO: Nicer?
                 ((CommandHelper)editCommand).RaiseCanExecuteChanged();
+                ((CommandHelper)addNoteCommand).RaiseCanExecuteChanged();
+
                 RaisePropertyChanged();
             }
         }
@@ -135,11 +137,9 @@ namespace BooksOrganizer.ViewModels
             this.window = window;
 
             editCommand = new CommandHelper(Edit, (o) => selectedNode != null);
-
+            addNoteCommand = new CommandHelper(AddNote, (o) => selectedNode != null && (selectedNode.IsNote || selectedNode.IsBook));
 
             Tree = new ObservableCollection<TreeNode>();
-            //Tree.Add(new TreeNode(TreeNode.NodeType.Node, null, "Root"));
-            //RaisePropertyChanged("Tree");
         }
 
         public ICommand DeleteCommand
@@ -160,17 +160,36 @@ namespace BooksOrganizer.ViewModels
                     return;
                 }
 
+                INodeData parent = null;
+
                 if (SelectedNode.IsBook)
-                    Util.DB.Books.Remove((Book)SelectedNode.GetData());
+                {
+                    Book bk = (Book)SelectedNode.GetData();
+                    
+                    if (!MessageBoxFactory.ShowConfirmAsBool("Delete book and all notes for '" + bk.Title + "'?", "Delete Book"))
+                        return;
+
+                    parent = bk.DefaultTopic;
+                    Util.DB.Books.Remove(bk);
+                    
+                }
                 else if (SelectedNode.IsNote)
-                    Util.DB.Notes.Remove((Note)SelectedNode.GetData());
+                {
+                    Note n = (Note)SelectedNode.GetData();
+                    if (!MessageBoxFactory.ShowConfirmAsBool("Delete " + n.OriginalText + "'?", "Delete Note"))
+                        return;
+
+                    parent = n.Book;
+                    Util.DB.Notes.Remove(n);
+                    
+                }
                 else if (SelectedNode.IsTopic)
                     Util.DB.Topics.Remove((Topic)SelectedNode.GetData());
                 else
                     throw new Exception("Type not supported: " + SelectedNode.GetDataType());
 
                 Util.DB.SaveChanges();
-                SetFilter();
+                SetFilter(parent);
             }
             catch (Exception e)
             {
@@ -217,30 +236,65 @@ namespace BooksOrganizer.ViewModels
             }
 
         }
-
-
-
+        
         private void Edit()
         {
             if (selectedNode == null)
                 return;
 
-            Window window;
+            Window window = null;
 
             if (selectedNode.IsBook)
             {
                 window = new EditBookWindow((Book)selectedNode.GetData());
                 window.ShowDialog();
 
-                SetFilter(window);
+            }
+            else if (selectedNode.IsNote)
+            {
+                Note n = (Note)selectedNode.GetData();
+                window = new EditNotesWindow(n.Book, n);
+                window.ShowDialog();
+            }
+            
+            SetFilter(window);
+        }
+
+        private readonly ICommand addNoteCommand;
+        public ICommand AddNoteCommand
+        {
+            get
+            {
+                return addNoteCommand;
             }
         }
-        
+
+        private void AddNote()
+        {
+            Book bk;
+
+            if (SelectedNode == null)
+                return;
+            else if (SelectedNode.IsNote)
+                bk = ((Note)selectedNode.GetData()).Book;
+            else if (selectedNode.IsBook)
+                bk = ((Book)selectedNode.GetData());
+            else
+                return;
+
+            var window = new EditNotesWindow(bk);
+
+            window.ShowDialog();
+
+            SetFilter(window);
+        }
+
+
         public ICommand RefreshCommand
         {
             get
             {
-                return new CommandHelper(SetFilter);
+                return new CommandHelper(() => SetFilter());
             }
         }
 
@@ -254,20 +308,23 @@ namespace BooksOrganizer.ViewModels
                 && ((ICancellable)window).Cancelled)
                 return;
 
-            SetFilter();
+            SetFilter(SelectedNode.GetData());
         }
 
-        private void SetFilter()
+        private void SetFilter(INodeData selected = null)
         {
             Tree.Clear();
 
+            Dictionary<int, List<Note>> notes = Workspace.Current.GetAllNotesGrouped();
+
             if (SelectedGroupBy == GroupBy.Title)
             {
-                foreach (Book b in Workspace.Current.DB.Books.OrderBy(x => x.Title))
+                foreach (Book b in Workspace.Current.GetAllBooks())
                 {
-                    var tn = new TreeNode(TreeNode.NodeType.Node, b, b.Title);
-                    //tn.Add(new TreeNode(TreeNode.NodeType.Leaf, null, "TEST 2"));
-                    Tree.Add(tn);
+                    TreeNode bookNode = MakeBook(notes, b);
+                    SelectAndExpand(selected, bookNode);
+
+                    Tree.Add(bookNode);
                 }
             }
             else if (SelectedGroupBy == GroupBy.Topic)
@@ -275,16 +332,21 @@ namespace BooksOrganizer.ViewModels
                 foreach (Topic t in Workspace.Current.DB.Topics.OrderBy(x => x.Name))
                 {
                     var tn = new TreeNode(TreeNode.NodeType.Node, t, t.Name);
-                    tn.IsExpanded = true;
+                    SelectAndExpand(selected, tn);
 
                     var query = from bk in Workspace.Current.DB.Books
                                 where bk.DefaultTopicID == t.ID
                                 orderby bk.Title ascending
                                 select bk;
+                    
                     //For testing. actually need to generate the list from all notes
                     foreach (Book b in query)
                     {
-                        tn.Add(new TreeNode(TreeNode.NodeType.Leaf,b, b.Title));
+
+                        var bk = MakeBook(notes, b);
+                        tn.Add(bk);
+
+                        SelectAndExpand(selected, bk);
                     }
 
                     Tree.Add(tn);
@@ -292,6 +354,36 @@ namespace BooksOrganizer.ViewModels
             }
 
             RaisePropertyChanged("Tree");
+        }
+
+        private void SelectAndExpand(INodeData toMatch, TreeNode node)
+        {
+            if (node.GetData() == toMatch)
+            {
+                TreeNode n = node;
+                do
+                {
+                    n.IsExpanded = true;
+                    n = n.Parent;
+                }
+                while (n != null);
+
+                SelectedNode = node;
+                
+            }
+        }
+
+        private static TreeNode MakeBook(Dictionary<int, List<Note>> notes, Book b)
+        {
+            var bookNode = new TreeNode(TreeNode.NodeType.Node, b, b.Title);
+
+            if (notes.ContainsKey(b.ID))
+            {
+                foreach (Note n in notes[b.ID])
+                    bookNode.Add(new TreeNode(TreeNode.NodeType.Leaf, n, n.OriginalText));
+            }
+
+            return bookNode;
         }
     }
 }
