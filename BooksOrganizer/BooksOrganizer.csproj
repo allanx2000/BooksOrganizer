@@ -81,11 +81,18 @@
     <Compile Include="BulkAddNotesWindow.xaml.cs">
       <DependentUpon>BulkAddNotesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ITree.cs" />
+    <Compile Include="Controls\Tree.xaml.cs">
+      <DependentUpon>Tree.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditNotesWindow.xaml.cs">
       <DependentUpon>EditNotesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditBookWindow.xaml.cs">
       <DependentUpon>EditBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditTopicWindow.xaml.cs">
+      <DependentUpon>EditTopicWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ICancellable.cs" />
     <Compile Include="Models\INodeData.cs" />
@@ -110,11 +117,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Tree.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditNotesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="EditBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditTopicWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,7 +158,6 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\WorkspaceContext.cs" />
     <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\SubTopic.cs" />
     <Compile Include="Models\Topic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

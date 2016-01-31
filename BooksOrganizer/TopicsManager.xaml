@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BooksOrganizer"
+        xmlns:ctrl ="clr-namespace:BooksOrganizer.Controls"
         mc:Ignorable="d"
         Title="Topics Manager" Height="400" Width="400">
     <DockPanel LastChildFill="True">
@@ -28,10 +29,17 @@
         </Grid>
 
         <StackPanel DockPanel.Dock="Right" Margin="10">
+            <Button>Add Topic...</Button>
+            <Button>Add Subtopic...</Button>
+            <Label Style="{StaticResource Separator}"/>
             <Button Command="{Binding EditCommand}">Edit</Button>
+            <Label Style="{StaticResource Separator}"/>
             <Button Command="{Binding DeleteCommand}">Delete</Button>
         </StackPanel>
 
+        <ctrl:Tree x:Name="TopicTree"/>
+        <!--
         <ListBox ItemsSource="{Binding Topics}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTopic}"/>
+        -->
     </DockPanel>
 </Window>

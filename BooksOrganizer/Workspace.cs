@@ -130,13 +130,14 @@ namespace BooksOrganizer
             return Workspace.Current.DB.Topics.OrderBy(x => x.Name).ToList();
         }
 
+        /*
         public ICollection<SubTopic> GetAllSubTopics(Topic selectedTopic)
         {
             return (from st in Workspace.Current.DB.SubTopics
                    where st.ParentTopicId == selectedTopic.ID
                    orderby st.Name ascending
                    select st).ToList();
-        }
+        }*/
 
         public ICollection<Book> GetAllBooks()
         {

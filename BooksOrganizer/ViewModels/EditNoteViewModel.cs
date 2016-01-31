@@ -54,7 +54,7 @@ namespace BooksOrganizer.ViewModels
             OriginalText = note.OriginalText;
             IsPublished = note.Published;
             SelectedTopic = note.Topic;
-            SelectedSubTopic = note.SubTopic;
+            //SelectedSubTopic = note.SubTopic;
             WriteUp = note.WriteUp;
             Notes = note.Notes;
         }
@@ -117,7 +117,7 @@ namespace BooksOrganizer.ViewModels
                     note.Location = Location;
                     note.OriginalText = OriginalText;
                     note.Published = IsPublished;
-                    note.SubTopic = SelectedSubTopic;
+                    //note.SubTopic = SelectedSubTopic;
                     note.Topic = SelectedTopic;
                     note.Updated = DateTime.Now;
                     note.WriteUp = WriteUp;
@@ -131,7 +131,7 @@ namespace BooksOrganizer.ViewModels
                         Topic = SelectedTopic,
                         Location = Location,
                         OriginalText = OriginalText,
-                        SubTopic = SelectedSubTopic,
+                        //SubTopic = SelectedSubTopic,
                         Created = DateTime.Now,
                         Updated = DateTime.Now,
                         WriteUp = WriteUp,
@@ -230,17 +230,18 @@ namespace BooksOrganizer.ViewModels
                 selectedTopic = value;
                 RaisePropertyChanged();
                 
+                /*
                 SelectedSubTopic = null;
 
                 SubTopics.Clear();
                 foreach (SubTopic st in Workspace.Current.GetAllSubTopics(selectedTopic))
                 {
                     SubTopics.Add(st);
-                }
+                }*/
             }
         }
 
-        
+        /*
         private SubTopic selectedSubTopic;
         public SubTopic SelectedSubTopic
         {
@@ -254,7 +255,7 @@ namespace BooksOrganizer.ViewModels
                 RaisePropertyChanged();
             }
         }
-        
+        */
         public ICollection<Topic> Topics
         {
             get
@@ -263,7 +264,7 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
-        public ObservableCollection<SubTopic> SubTopics = new ObservableCollection<SubTopic>();
+        //public ObservableCollection<SubTopic> SubTopics = new ObservableCollection<SubTopic>();
 
         #endregion
 

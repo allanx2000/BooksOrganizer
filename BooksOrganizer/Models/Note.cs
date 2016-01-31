@@ -17,9 +17,11 @@ namespace BooksOrganizer.Models
         public int BookId { get; set; }
         public virtual Book Book { get; set; }
 
+        /*
         [Column("SubTopic")]
         public int SubTopicId { get; set; }
         public virtual SubTopic SubTopic { get; set; }
+        */
 
         [StringLength(50)]
         public string Location { get; set; }

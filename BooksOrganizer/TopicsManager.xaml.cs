@@ -25,7 +25,7 @@ namespace BooksOrganizer
         {
             InitializeComponent();
 
-            vm = new TopicsManagerViewModel(this);
+            vm = new TopicsManagerViewModel(this, TopicTree);
             this.DataContext = vm;
         }
     }

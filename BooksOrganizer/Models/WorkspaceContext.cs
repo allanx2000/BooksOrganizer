@@ -26,7 +26,7 @@ namespace BooksOrganizer.Models
         public DbSet<Note> Notes { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<SubTopic> SubTopics { get; set; }
+        //public DbSet<SubTopic> SubTopics { get; set; }
         
         private WorkspaceContext(string connectionString) : base(new SQLiteConnection(connectionString), true)
         {

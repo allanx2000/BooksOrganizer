@@ -44,6 +44,16 @@ namespace BooksOrganizer.ViewModels
         private INodeData data;
         private ObservableCollection<TreeNode> nodes;
 
+        public static TreeNode CreateNode(INodeData data, string text)
+        {
+            return new TreeNode(NodeType.Node, data,text);
+        }
+
+        public static TreeNode CreateLeaf(INodeData data, string text)
+        {
+            return new TreeNode(NodeType.Leaf, data, text);
+        }
+
         public ObservableCollection<TreeNode> Nodes
         {
             get
