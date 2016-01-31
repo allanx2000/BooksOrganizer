@@ -40,6 +40,38 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new CommandHelper(Delete);
+            }
+        }
+
+        private void Delete()
+        {
+            try
+            {
+                if (SelectedTopic != null)
+                {
+                    var notes = Util.DB.Notes.Count(x => x.SubTopicId == SelectedTopic.ID);
+
+                    if (MessageBoxFactory.ShowConfirmAsBool(SelectedTopic.Name + " has " + notes + " notes. These will be orphaned. Continue?", "Confirm Delete"))
+                    {
+                        Util.DB.Topics.Remove(SelectedTopic);
+                        Util.DB.SaveChanges();
+
+                        RaisePropertyChanged("Topic");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Util.DB.RejectChanges();
+                MessageBoxFactory.ShowError(e);
+            }
+        }
+
         public ICommand AddCommand
         {
             get
@@ -47,6 +79,7 @@ namespace BooksOrganizer.ViewModels
                 return new CommandHelper(Add);
             }
         }
+
 
         private void Add()
         {

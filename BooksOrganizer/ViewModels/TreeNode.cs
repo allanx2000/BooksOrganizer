@@ -63,6 +63,14 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+        public INodeData Data
+        {
+            get
+            {
+                return data;
+            }
+        }
+
         public INodeData GetData()
         {
             return data;

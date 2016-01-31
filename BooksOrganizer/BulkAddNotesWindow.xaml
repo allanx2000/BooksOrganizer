@@ -1,0 +1,46 @@
+﻿<Window x:Class="BooksOrganizer.BulkAddNotesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BooksOrganizer"
+        mc:Ignorable="d"
+        Title="Bulk Add Notes" Height="600" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label>Book: </Label>
+            <ComboBox IsEditable="False" ItemsSource="{Binding Books}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedBook}" Width="200"/>
+        </StackPanel>
+
+        <GroupBox  Grid.Row="1" Header="Input">
+            <TextBox Style="{StaticResource Scrollable}" AcceptsReturn="True" Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" 
+                     VerticalContentAlignment="Top"/>
+        </GroupBox>
+
+        <Button Grid.Row="2" HorizontalAlignment="Center" IsEnabled="{Binding CanParse}" Command="{Binding ParseCommand}">Parse</Button>
+
+        <GroupBox  Grid.Row="3" Header="Parsed">
+            <ListBox Style="{StaticResource Scrollable}" ItemsSource="{Binding ParsedNotes}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path=Data.Location}"/>
+                            <Label>: </Label>
+                            <Label Content="{Binding Path=Data.OriginalText}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+
+        <Button Grid.Row="4" HorizontalAlignment="Center" Command="{Binding AddCommand}">Add All</Button>
+    </Grid>
+</Window>

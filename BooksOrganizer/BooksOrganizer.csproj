@@ -78,6 +78,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BulkAddNotesWindow.xaml.cs">
+      <DependentUpon>BulkAddNotesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditNotesWindow.xaml.cs">
       <DependentUpon>EditNotesWindow.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,7 @@
       <DependentUpon>TopicsManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util.cs" />
+    <Compile Include="ViewModels\BulkAddNotesViewModel.cs" />
     <Compile Include="ViewModels\EditNoteViewModel.cs" />
     <Compile Include="ViewModels\EditBookViewModel.cs" />
     <Compile Include="ViewModels\TreeNode.cs" />
@@ -102,6 +106,10 @@
     <Compile Include="WorkspaceWindow.xaml.cs">
       <DependentUpon>WorkspaceWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="BulkAddNotesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditNotesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

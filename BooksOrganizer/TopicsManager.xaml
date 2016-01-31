@@ -28,8 +28,8 @@
         </Grid>
 
         <StackPanel DockPanel.Dock="Right" Margin="10">
-            <Button>Edit</Button>
-            <Button>Delete</Button>
+            <Button Command="{Binding EditCommand}">Edit</Button>
+            <Button Command="{Binding DeleteCommand}">Delete</Button>
         </StackPanel>
 
         <ListBox ItemsSource="{Binding Topics}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedTopic}"/>

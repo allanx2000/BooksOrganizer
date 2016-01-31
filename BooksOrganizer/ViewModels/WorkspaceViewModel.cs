@@ -198,6 +198,25 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+        
+
+            public ICommand BulkAddNotesCommand
+        {
+            get
+            {
+                return new CommandHelper(BulkAddNotes);
+            }
+        }
+
+        public void BulkAddNotes()
+        {
+            var window = new BulkAddNotesWindow();
+            window.ShowDialog();
+
+            SetFilter(window);
+        }
+
+
         public ICommand TopicsManagerCommand
         {
             get
@@ -210,6 +229,8 @@ namespace BooksOrganizer.ViewModels
         {
             var window = new TopicsManager();
             window.ShowDialog();
+
+            SetFilter(window);
         }
 
         public ICommand AddBookCommand
@@ -225,6 +246,10 @@ namespace BooksOrganizer.ViewModels
             var window = new EditBookWindow();
 
             window.ShowDialog();
+
+            SetFilter(window);
+
+
         }
 
         private readonly ICommand editCommand;
@@ -308,7 +333,7 @@ namespace BooksOrganizer.ViewModels
                 && ((ICancellable)window).Cancelled)
                 return;
 
-            SetFilter(SelectedNode.GetData());
+            SetFilter(SelectedNode == null? null : SelectedNode.GetData());
         }
 
         private void SetFilter(INodeData selected = null)
