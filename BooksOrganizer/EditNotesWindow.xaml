@@ -8,6 +8,17 @@
         Title="{Binding WindowTitle, FallbackValue=WindowTitle}" 
         Height="400" Width="600" SizeToContent="Height" >
     <Grid>
+        <Grid.Resources>
+            
+            <Style TargetType="TextBox" x:Key="MultilineTextBox">
+                <Setter Property="AcceptsReturn" Value="True"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+                <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            </Style>
+        </Grid.Resources>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -34,29 +45,20 @@
                   SelectedItem="{Binding SelectedTopic}" 
                   ItemsSource="{Binding Topics}" DisplayMemberPath="Name" 
                   VerticalAlignment="Center"/>
-        <!--
-        <Label Grid.Row="1" Grid.Column="2">Sub-Topic:</Label>
-        <ComboBox Grid.Row="1" Grid.Column="3" 
-                  SelectedItem="{Binding SelectedSubTopic}" 
-                  ItemsSource="{Binding SubTopics}" DisplayMemberPath="Name" 
-                  VerticalAlignment="Center"/>
-        -->
         
         <Label Grid.Column="0" Grid.Row="2">Original Text:</Label>
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding OriginalText, UpdateSourceTrigger=PropertyChanged}"/>
         
 
         <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top">Write Up:</Label>
-        <TextBox AcceptsReturn="True" VerticalContentAlignment="Top" 
+        <TextBox Style="{StaticResource MultilineTextBox}" 
                  Grid.Row="3" Grid.Column="1" Height="200" 
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 Text="{Binding WriteUp, UpdateSourceTrigger=PropertyChanged}" Margin="6,5,4,6" />
+                 Text="{Binding WriteUp, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Row="3" Grid.Column="2" VerticalAlignment="Top">Notes:</Label>
-        <TextBox AcceptsReturn="True" VerticalContentAlignment="Top" 
-                 Grid.Row="3" Grid.Column="3" Height="200" 
-                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" Margin="6,5,4,6" />
+        <TextBox Grid.Row="3" Grid.Column="3" Height="200" 
+                 Style="{StaticResource MultilineTextBox}"
+                 Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Row="4" Grid.Column="0" >Published:</Label>
         <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding IsPublished, UpdateSourceTrigger=PropertyChanged}"/>

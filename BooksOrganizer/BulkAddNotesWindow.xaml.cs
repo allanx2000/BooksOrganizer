@@ -1,4 +1,5 @@
-﻿using BooksOrganizer.ViewModels;
+﻿using BooksOrganizer.Models;
+using BooksOrganizer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace BooksOrganizer
             this.DataContext = vm;
 
             InitializeComponent();
+        }
+
+        public BulkAddNotesWindow(Book book) : this()
+        {
+            vm.SelectedBook = book;
         }
     }
 }

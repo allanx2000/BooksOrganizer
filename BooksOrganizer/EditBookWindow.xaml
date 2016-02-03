@@ -27,10 +27,15 @@
         <Label Grid.Column="0" Grid.Row="1">
             <TextBlock>Default<LineBreak/>Topic:</TextBlock>
         </Label>
-        <ComboBox Grid.Column="1" Grid.Row="1"
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+            <ComboBox 
                   SelectedItem="{Binding DefaultTopic}" 
                   ItemsSource="{Binding Topics}" DisplayMemberPath="Name" 
-                  VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"/>
+                  VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"/>
+
+            <Button VerticalAlignment="Center" Command="{Binding AddTopicCommand}">New...</Button>
+        
+        </StackPanel>
         
         <Label Grid.Column="0" Grid.Row="2">Rating:</Label>
         

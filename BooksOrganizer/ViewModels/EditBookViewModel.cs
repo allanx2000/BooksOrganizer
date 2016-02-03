@@ -68,6 +68,13 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+        public ICommand AddTopicCommand { get { return new CommandHelper(AddTopic); } }
+        private void AddTopic()
+        {
+            var window = new EditTopicWindow();
+            window.ShowDialog();
+            RaisePropertyChanged("Topics");
+        }
 
         public ICommand CancelCommand
         {

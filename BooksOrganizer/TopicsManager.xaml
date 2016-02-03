@@ -17,24 +17,17 @@
 
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            
-            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
-                <Label Content="Name: "/>
-                <TextBox Width="100" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Grid.Column="2"  Command="{Binding AddCommand}">Add</Button>
-            </StackPanel>
 
-            <Button Grid.Column="3">Close</Button>
+            <Button Grid.ColumnSpan="3" HorizontalAlignment="Center" Command="{Binding CloseCommand}">Close</Button>
 
         </Grid>
 
         <StackPanel DockPanel.Dock="Right" Margin="10">
-            <Button>Add Topic...</Button>
-            <Button>Add Subtopic...</Button>
+            <Button Command="{Binding AddCommand}">Add</Button>
             <Label Style="{StaticResource Separator}"/>
-            <Button Command="{Binding EditCommand}">Edit</Button>
+            <Button IsEnabled="{Binding CanEdit}" Command="{Binding EditCommand}">Edit</Button>
             <Label Style="{StaticResource Separator}"/>
-            <Button Command="{Binding DeleteCommand}">Delete</Button>
+            <Button IsEnabled="{Binding CanEdit}"  Command="{Binding DeleteCommand}">Delete</Button>
         </StackPanel>
 
         <ctrl:Tree x:Name="TopicTree"/>

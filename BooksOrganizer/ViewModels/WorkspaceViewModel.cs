@@ -210,9 +210,19 @@ namespace BooksOrganizer.ViewModels
 
         public void BulkAddNotes()
         {
-            var window = new BulkAddNotesWindow();
-            window.ShowDialog();
+            Book bk = null;
+            
+            if (SelectedNode != null)
+            {
+                if (SelectedNode.IsNote)
+                    bk = ((Note)selectedNode.GetData()).Book;
+                else if (selectedNode.IsBook)
+                    bk = ((Book)selectedNode.GetData());
+            }
 
+            var window = new BulkAddNotesWindow(bk);
+            window.ShowDialog();
+            
             SetFilter(window);
         }
 
@@ -315,6 +325,37 @@ namespace BooksOrganizer.ViewModels
         }
 
 
+        /*
+        private readonly ICommand ctxBulkAddNotesCommand;
+        public ICommand CtxBulkAddNotesCommand
+        {
+            get
+            {
+                return ctxBulkAddNotesCommand;
+            }
+        }
+
+        private void CtxBulkAddNotes()
+        {
+            Book bk;
+
+            if (SelectedNode == null)
+                return;
+            else if (SelectedNode.IsNote)
+                bk = ((Note)selectedNode.GetData()).Book;
+            else if (selectedNode.IsBook)
+                bk = ((Book)selectedNode.GetData());
+            else
+                return;
+
+            var window = new BulkAddNotesWindow(bk);
+
+            window.ShowDialog();
+
+            SetFilter(window);
+        }
+        */
+
         public ICommand RefreshCommand
         {
             get
@@ -405,7 +446,7 @@ namespace BooksOrganizer.ViewModels
             if (notes.ContainsKey(b.ID))
             {
                 foreach (Note n in notes[b.ID])
-                    bookNode.Add(new TreeNode(TreeNode.NodeType.Leaf, n, n.OriginalText));
+                    bookNode.Add(new TreeNode(TreeNode.NodeType.Leaf, n, n.Location + ": " + n.OriginalText));
             }
 
             return bookNode;

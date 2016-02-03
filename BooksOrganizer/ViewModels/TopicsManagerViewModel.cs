@@ -20,7 +20,9 @@ namespace BooksOrganizer.ViewModels
         {
             this.window = window;
 
-            topicsTree.SetGenerateTree(MakeTree);
+            tree = topicsTree;
+            tree.OnSelectedChanged = (() => RaisePropertyChanged("CanEdit"));
+            tree.SetGenerateTree(MakeTree);
         }
 
         private ICollection<TreeNode> MakeTree()
@@ -43,7 +45,7 @@ namespace BooksOrganizer.ViewModels
             return tree;
         }
 
-        public Topic SelectedTopic { get; set; }
+        public Topic SelectedTopic { get { return tree.SelectedNodeData as Topic; } }
 
         public ICollection<Topic> Topics
         {
@@ -63,6 +65,8 @@ namespace BooksOrganizer.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public bool CanEdit { get { return tree.SelectedNodeData != null; }}
 
         public ICommand CloseCommand
         {
@@ -112,28 +116,77 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
-
         private void Add()
         {
-            try
-            {
-                Workspace.Current.DB.Topics.Add(new Models.Topic() {
-                    Name = this.Name
-                });
-                
-                Workspace.Current.DB.SaveChanges();
+            var window = new EditTopicWindow();
+            window.ShowDialog();
 
-                Name = "";
-                RaisePropertyChanged("Topics");
-            }
-            catch (Exception e)
-            {
-                Workspace.Current.DB.RejectChanges();
-
-                MessageBoxFactory.ShowError(e);
-            }
+            tree.RefreshTree(true);
         }
 
+
+        public ICommand EditCommand
+        {
+            get
+            {
+                return new CommandHelper(Edit);
+            }
+        }
+        
+        private void Edit()
+        {
+            if (SelectedTopic == null)
+                return;
+
+            var window = new EditTopicWindow(SelectedTopic);
+            window.ShowDialog();
+
+            tree.RefreshTree(true);
+        }
+
+            /*      
+
+                    public ICommand AddCommand
+                    {
+                        get
+                        {
+                            return new CommandHelper(Add);
+                        }
+                    }
+
+
+                    private void Add()
+                    {
+                        var window = new EditTopicWindow();
+                        window.ShowDialog();
+
+                        tree.RefreshTree(true);
+
+            /*          
+                        try
+                        {
+                            var window = new EditTopicWindow();
+                            window.ShowDialog();
+
+                            tree.RefreshTree(true);
+
+                            Workspace.Current.DB.Topics.Add(new Models.Topic() {
+                                Name = this.Name
+                            });
+
+                            Workspace.Current.DB.SaveChanges();
+
+                            Name = "";
+                            RaisePropertyChanged("Topics");
+                        }
+                        catch (Exception e)
+                        {
+                            Workspace.Current.DB.RejectChanges();
+
+                            MessageBoxFactory.ShowError(e);
+                        }
+                        */
+       
         #endregion
     }
 }

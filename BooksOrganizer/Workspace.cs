@@ -155,11 +155,11 @@ namespace BooksOrganizer
             if (unpublishedOnly)
                 query = query = (from n in Current.DB.Notes
                                  where n.Published == false
-                                 orderby n.OriginalText ascending
+                                 orderby n.Location ascending //TODO: Make int? 
                                  select n);
             else
                 query = query = (from n in Current.DB.Notes
-                                 orderby n.OriginalText ascending
+                                 orderby n.Location ascending
                                  select n);
             
             foreach (Note n in query)

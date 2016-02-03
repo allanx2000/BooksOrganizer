@@ -51,7 +51,14 @@ namespace BooksOrganizer.ViewModels
 
         public bool CanParse { get { return !string.IsNullOrEmpty(inputText); } }
 
-        public Book SelectedBook { get; set; }
+        private Book selectedBook;
+        public Book SelectedBook { get { return selectedBook; }
+            set
+            {
+                selectedBook = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public ICollection<Book> Books
         {

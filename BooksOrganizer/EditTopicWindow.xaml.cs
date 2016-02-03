@@ -34,6 +34,8 @@ namespace BooksOrganizer
             InitializeComponent();
 
             vm = new EditTopicViewModel(this, topic);
+
+            this.DataContext = vm;
         }
     }
 
@@ -53,6 +55,9 @@ namespace BooksOrganizer
         {
             this.window = window;
             existing = topic;
+
+            if (existing != null)
+                Name = existing.Name;
         }
         
         private string name;
@@ -97,6 +102,7 @@ namespace BooksOrganizer
                 }
 
                 Util.DB.SaveChanges();
+                window.Close();
             }
             catch (Exception e)
             {

@@ -24,7 +24,7 @@ namespace BooksOrganizer.Controls
     public partial class Tree : UserControl, ITree
     {
         private readonly ObservableCollection<TreeNode> tree = new ObservableCollection<TreeNode>();
-        
+
         public Tree()
         {
             InitializeComponent();
@@ -41,6 +41,8 @@ namespace BooksOrganizer.Controls
 
         public INodeData SelectedNodeData { get; private set; }
 
+        public Action OnSelectedChanged { get; set; }
+
         private void TreeList_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var selectedNode = e.NewValue as TreeNode;
@@ -49,6 +51,9 @@ namespace BooksOrganizer.Controls
                 SelectedNodeData = selectedNode.GetData();
             else
                 SelectedNodeData = null;
+
+            if (OnSelectedChanged != null)
+                OnSelectedChanged.Invoke();
         }
 
         private Func<ICollection<TreeNode>> GenerateTree;
@@ -77,7 +82,10 @@ namespace BooksOrganizer.Controls
 
         private TreeNode FindNode(INodeData toMatch, ICollection<TreeNode> nodes)
         {
-            foreach (TreeNode n in tree)
+            if (toMatch == null || nodes == null)
+                return null;
+
+            foreach (TreeNode n in nodes)
             {
                 if (n.GetData() == toMatch)
                     return n;

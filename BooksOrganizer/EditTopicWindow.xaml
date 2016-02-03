@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BooksOrganizer"
         mc:Ignorable="d"
-        Title="EditTopicWindow" Height="300" Width="300">
-    <Grid>
-        
+        Title="Add/Edit Topic" SizeToContent="Height" Width="300" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Name: "/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right"  Command="{Binding SaveCommand}">Save</Button>
+
+
     </Grid>
+    
 </Window>

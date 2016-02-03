@@ -50,31 +50,43 @@
                 </StackPanel>
             </GroupBox>
 
-            <!-- DisplayMemberPath="Text"-->
-            <TreeView Grid.Row="2"  ItemsSource="{Binding Tree}" SelectedItemChanged="TreeView_SelectedItemChanged" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="{x:Type TreeViewItem}">
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
-                    </Style>
-                </TreeView.ItemContainerStyle>
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate x:Name="DataTemplate" ItemsSource="{Binding Nodes}">
-                        <TextBlock Text="{Binding Text}" />
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
+            <Grid Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
 
-                <TreeView.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Edit" Command="{Binding EditCommand}"/>
-                        <Separator/>
-                        <MenuItem Header="Add Book" Command="{Binding AddBookCommand}" />
-                        <MenuItem Header="Add Note" Command="{Binding AddNoteCommand}" />
-                        <Separator/>
-                        <MenuItem Header="Delete" Command="{Binding DeleteCommand}"/> 
-                    </ContextMenu>
-                </TreeView.ContextMenu>
-            </TreeView>
+                <TreeView Grid.Column="0"
+                    ItemsSource="{Binding Tree}" SelectedItemChanged="TreeView_SelectedItemChanged" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate x:Name="DataTemplate" ItemsSource="{Binding Nodes}">
+                            <TextBlock Text="{Binding Text}" />
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
 
+                </TreeView>
+
+
+                <StackPanel Grid.Column="1">
+                    <Button Command="{Binding EditCommand}">Edit</Button>
+                    
+                    <Label Style="{StaticResource Separator}"/>
+                    <Button Command="{Binding AddBookCommand}">Add Book</Button>
+                    <Button Command="{Binding AddNoteCommand}">Add Note</Button>
+                    
+                    <Label Style="{StaticResource Separator}"/>
+                    <Button Content="Bulk Add Notes" Command="{Binding BulkAddNotesCommand}" />
+                    
+                    <Label Style="{StaticResource Separator}"/>
+                    <Button Content="Delete" Command="{Binding DeleteCommand}"/>
+                </StackPanel>
+            </Grid>
+  
 
         </Grid>
     </DockPanel>
