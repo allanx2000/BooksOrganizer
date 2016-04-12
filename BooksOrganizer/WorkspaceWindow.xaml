@@ -15,7 +15,7 @@
                 <MenuItem Header="Topics Manager" Command="{Binding TopicsManagerCommand}"/>
                 <MenuItem Header="Bulk Add Notes" Command="{Binding BulkAddNotesCommand}"/>
             </MenuItem>
-            <MenuItem Header="Exporter"/>
+            <MenuItem Header="Exporter" Command="{Binding ExporterCommand}"/>
         </Menu>
 
         <Grid>

@@ -94,6 +94,11 @@
     <Compile Include="EditTopicWindow.xaml.cs">
       <DependentUpon>EditTopicWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExporterWindow.xaml.cs">
+      <DependentUpon>ExporterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Exporter\BaseExporter.cs" />
+    <Compile Include="Exporter\TextExporter.cs" />
     <Compile Include="ICancellable.cs" />
     <Compile Include="Models\INodeData.cs" />
     <Compile Include="RequiredFieldException.cs" />
@@ -104,6 +109,7 @@
     <Compile Include="ViewModels\BulkAddNotesViewModel.cs" />
     <Compile Include="ViewModels\EditNoteViewModel.cs" />
     <Compile Include="ViewModels\EditBookViewModel.cs" />
+    <Compile Include="ViewModels\ExporterViewModel.cs" />
     <Compile Include="ViewModels\TreeNode.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
     <Compile Include="ViewModels\TopicsManagerViewModel.cs" />
@@ -130,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditTopicWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExporterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

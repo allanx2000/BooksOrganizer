@@ -150,6 +150,20 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
+        public ICommand ExporterCommand
+        {
+            get
+            {
+                return new CommandHelper(ShowExporter);
+            }
+        }
+
+        public void ShowExporter()
+        {
+            ExporterWindow exporter = new ExporterWindow();
+            exporter.ShowDialog();
+        }
+
         private void DeleteSelected()
         {
             try

@@ -10,7 +10,7 @@
     <Grid>
         <Grid.Resources>
             
-            <Style TargetType="TextBox" x:Key="MultilineTextBox">
+            <Style TargetType="TextBox" x:Key="MultilineTextBox" BasedOn="{StaticResource {x:Type TextBox} }">
                 <Setter Property="AcceptsReturn" Value="True"/>
                 <Setter Property="VerticalContentAlignment" Value="Top"/>
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -46,8 +46,8 @@
                   ItemsSource="{Binding Topics}" DisplayMemberPath="Name" 
                   VerticalAlignment="Center"/>
         
-        <Label Grid.Column="0" Grid.Row="2">Original Text:</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding OriginalText, UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">Original Text:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="100" Style="{StaticResource MultilineTextBox}" Text="{Binding OriginalText, UpdateSourceTrigger=PropertyChanged}"/>
         
 
         <Label Grid.Row="3" Grid.Column="0" VerticalAlignment="Top">Write Up:</Label>
