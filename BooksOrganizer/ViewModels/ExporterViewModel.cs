@@ -20,6 +20,8 @@ namespace BooksOrganizer.ViewModels
         public ExporterViewModel(Window window)
         {
             this.window = window;
+
+            SelectedExporter = TextExporter;
         }
 
         public const string TextExporter = "Text";
@@ -33,13 +35,31 @@ namespace BooksOrganizer.ViewModels
         {
             get
             {
-                return Workspace.Current.DB.Books.ToList();
+                return Workspace.Current.DB.Books.OrderBy(x=>x.Title).ToList();
             }
         }
 
+        private Book selectedBook;
         public Book SelectedBook
         {
-            get; set;
+            get { return selectedBook; }
+            set
+            {
+                selectedBook = value;
+
+                if (selectedBook != null)
+                {
+                    string bookName = selectedBook.Title;
+                    if (bookName.Length > MaxLength)
+                        bookName = bookName.Substring(0, MaxLength);
+
+                    SavePath = Path.Combine(Workspace.Current.Directory, bookName + ".txt");
+                }
+                else
+
+                    SavePath = "";
+                RaisePropertyChanged();
+            }
         }
         
         public List<string> Exporters
@@ -79,6 +99,8 @@ namespace BooksOrganizer.ViewModels
         }
 
         private bool includeLocation;
+        private const int MaxLength = 20;
+
         public bool IncludeLocation
         {
             get
@@ -126,7 +148,7 @@ namespace BooksOrganizer.ViewModels
             }
         }
 
-        public ICommand CancelCommand
+        public ICommand CloseCommand
         {
             get
             {

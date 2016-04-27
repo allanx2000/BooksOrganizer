@@ -5,41 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BooksOrganizer"
         mc:Ignorable="d"
-        Title="ExporterWindow" Height="300" Width="300">
+        Title="ExporterWindow" Width="300" ResizeMode="NoResize" SizeToContent="Height">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Label>Exporter: </Label>
-            <ComboBox SelectedItem="{Binding SelectedExporter}" ItemsSource="{Binding Exporters}" Width="130"/>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <DockPanel LastChildFill="True" Grid.Row="1">
-            <Label>Book:</Label>
-            <ComboBox SelectedItem="{Binding SelectedBook}" ItemsSource="{Binding Books}" DisplayMemberPath="Title" />
-        </DockPanel>
+        <Grid.Resources>
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+        </Grid.Resources>
+        
+        <Label Grid.Row="0" Grid.Column="0">Exporter: </Label>
+        <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" SelectedItem="{Binding SelectedExporter}" ItemsSource="{Binding Exporters}" Width="130"/>
 
+        <Label Grid.Row="1" Grid.Column="0">Book:</Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedItem="{Binding SelectedBook}" ItemsSource="{Binding Books}" DisplayMemberPath="Title" />
 
-        <DockPanel Grid.Row="1" LastChildFill="True">
-            <Label DockPanel.Dock="Left">Save To:</Label>
+        <Label Grid.Row="2" Grid.Column="0" DockPanel.Dock="Left">Save To:</Label>
+
+        <DockPanel Grid.Row="2" Grid.Column="1"  LastChildFill="True">
             <Button DockPanel.Dock="Right">...</Button>
             <TextBox Text="{Binding SavePath}" />
         </DockPanel>
-        
-        <GroupBox Header="Include" Grid.Row="2">
+
+        <GroupBox Grid.Row="3" Grid.ColumnSpan="2"  Header="Include">
             <StackPanel Orientation="Vertical">
                 <CheckBox IsChecked="{Binding IncludeLocation}">Location</CheckBox>
             </StackPanel>
         </GroupBox>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Command="{Binding ExportCommand}">Export</Button>
-            <Button Command="{Binding CancelCommand}">Cancel</Button>
-        </StackPanel>
+        <Grid Grid.Row="4" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" HorizontalAlignment="Center" Command="{Binding ExportCommand}">Export</Button>
+            <Button Grid.Column="2" HorizontalAlignment="Right" Command="{Binding CloseCommand}">Close</Button>
+        </Grid>
     </Grid>
 </Window>

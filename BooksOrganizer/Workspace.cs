@@ -37,6 +37,8 @@ namespace BooksOrganizer
             var i = Current.DB.Notes.FirstOrDefault();
         }
 
+        
+
         /// <summary>
         /// Creates a new workspace folder
         /// </summary>
@@ -79,6 +81,7 @@ namespace BooksOrganizer
             }
 
             this.Path = path;
+            this.Directory = (new FileInfo(path)).DirectoryName;
 
             db = WorkspaceContext.GetContext(path);
         }
@@ -103,6 +106,7 @@ namespace BooksOrganizer
             get;
             private set;
         }
+        public string Directory { get; private set; }
 
         /// <summary>
         /// Does a final save of the workspace and closes it
